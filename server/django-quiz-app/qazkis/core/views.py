@@ -10,11 +10,11 @@ from .restapi.serializers import TestSerializer, QuestionSerializer
 # test handler
 
 
-@api_view(['GET', 'UPDATE', 'DELETE'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def test_view(request, pk):
     if request.method == "GET":
         return get_test(request, pk)
-    elif request.method == "UPDATE":
+    elif request.method == "PUT":
         return update_test(request, pk)
     elif request.method == "DELETE":
         return delete_test(request, pk)
@@ -37,22 +37,28 @@ def get_test(request, pk):
 
 @api_view(['POST', ])
 def create_test(request):
-    serializer = TestSerializer(data=request.data)
+    test_serializer = TestSerializer(data=request.data[0])
 
-    if serializer.is_valid():
-        serializer.save()
+    if test_serializer.is_valid():
+        test = test_serializer.save()
+        pk = test.pk
 
-    return Response(serializer.data)
+    add_questions(request.data[1], pk=pk)
+
+    return get_test(request, pk=pk)
 
 
 def update_test(request, pk):
     test = get_object_or_404(Test, pk=pk)
-    serializer = TestSerializer(data=request.data, instance=test)
 
-    if serializer.is_valid():
-        serializer.save()
+    test_serializer = TestSerializer(data=request.data[0], instance=test)
 
-    return Response(serializer.data)
+    if test_serializer.is_valid():
+        test_serializer.save()
+
+    add_questions(request.data[1], pk=pk, delete_existing=True)
+
+    return get_test(request, pk)
 
 
 def delete_test(request, pk):
@@ -62,29 +68,21 @@ def delete_test(request, pk):
     return Response("Object deleted succesfully", status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view(['POST', 'UPDATE'])
-def questions_handler(request, pk):
-    if request.method == "POST":
-        return add_questions(request, pk)
-    elif request.method == "UPDATE":
-        return update_questions(request, pk)
+def add_questions(request: list, pk, delete_existing=False):
 
-
-def add_questions(request, pk):
-
-    for question in request.data:
+    for question in request:
         question.update({'test_id': pk})
 
-    questions = QuestionSerializer(data=request.data, many=True)
+    questions = QuestionSerializer(data=request, many=True)
 
     if questions.is_valid():
+        if delete_existing == True:
+            objects = Question.objects.filter(test_id=pk)
+            objects.delete()
+
         questions.save()
 
     posted_question = Question.objects.filter(test_id=pk)
     serializer = QuestionSerializer(posted_question, many=True)
 
-    return Response(serializer.data)
-
-
-def update_questions(request, pk):
-    pass
+    return serializer.data
