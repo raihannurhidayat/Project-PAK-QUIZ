@@ -16,7 +16,7 @@ function App() {
   const [answare, setAnsware] = useState({});
   const [user, setUser] = useState({});
   const [questions, setQuestion] = useState([]);
-  const [cheating, setCheating] = useState(0)
+  const [cheating, setCheating] = useState(0);
 
   useEffect(() => {
     getAllData();
@@ -92,10 +92,21 @@ function App() {
           />
         )}
         {/* Feature start */}
-        {display === "new" && <QuestionNew answare={answare} questions={questions} setAnsware={setAnsware} setScore={setScore} setDisplay={setDisplay} />}
+        {display === "new" && (
+          <QuestionNew
+            setIndex={setIndex}
+            setCheating={setCheating}
+            answare={answare}
+            questions={questions}
+            setAnsware={setAnsware}
+            setScore={setScore}
+            setDisplay={setDisplay}
+            cheating={cheating}
+          />
+        )}
         {/* Feature end */}
       </div>
-      {display !== "user" && display !== "new" && (
+      {display !== "user" && display !== "new" && display !== "question" && (
         <Footer
           setAnsware={setAnsware}
           setIndex={setIndex}
@@ -103,6 +114,7 @@ function App() {
           handleReset={handleReset}
           setDisplay={setDisplay}
           setUser={setUser}
+          setCheating={setCheating}
         />
       )}
     </div>
