@@ -11,14 +11,13 @@ Project support is open source API that allow to create test and questions
 ### Usage
 * Run python manage.py runserver to start the api.
 ### API Endpoints
+Please see [example.json](https://github.com/raihannurhidayat/Project-PAK-QUIZ/blob/master/server/example.json) for sending POST and PUT request body
 | HTTP Verbs | Endpoints | Action |
 | --- | --- | --- |
 | POST | test/create/ | To create a new test |
 | GET | test/:test_id/ | To retrieve a test detail with its questions |
 | UPDATE | test/:test_id/ | To edit the detail of a test |
 | DELETE | test/:test_id/ | To delete a test |
-| POST | test/:test_id/questions/ | To add questions to a test |
-| UPDATE | test/:test_id/questions/ | To edit questions to a test |
 ### Technologies Used
 * [Django](https://www.djangoproject.com/) Django is a high-level Python web framework used for backend
 ### Authors

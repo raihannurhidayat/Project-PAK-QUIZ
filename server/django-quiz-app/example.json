@@ -1,0 +1,25 @@
+[
+    {
+        "name": "Quiz Name",
+        "description": "Quiz Description",
+        "closed": false
+    },
+    [
+        {
+            "question": "Question 1",
+            "option_a": "Option A",
+            "option_b": "Option B",
+            "option_c": "Option C",
+            "option_d": "Option D",
+            "answer": "A"
+        },
+        {
+            "question": "Question 2",
+            "option_a": "Option A",
+            "option_b": "Option B",
+            "option_c": "Option C",
+            "option_d": "Option D",
+            "answer": "B"
+        }
+    ]
+]
