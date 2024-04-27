@@ -1,6 +1,6 @@
 import React from "react";
 
-const User = ({ setUser, user, setDisplay }) => {
+const User = ({ setUser, setDisplay }) => {
   const handleClick = (e) => {
     e.preventDefault();
     setUser({

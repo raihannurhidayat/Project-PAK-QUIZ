@@ -8,7 +8,7 @@ const Score = ({ setDisplay, score, setIndex, user }) => {
 
   return (
     <div className="h-full p-[15px] flex flex-col gap-1 items-center justify-center">
-      <div className="text-copper text-center text-[100px]">{user.user} SCORE</div>
+      <div className="text-copper text-center text-[100px]">{user.user.toUpperCase()} SCORE</div>
       <div className="rounded-[280px] w-[280px] h-[280px] border-[6px] border-english-lavender text-[120px] flex justify-center items-center text-pastelPink">
         {Math.floor(score.score)}
       </div>
