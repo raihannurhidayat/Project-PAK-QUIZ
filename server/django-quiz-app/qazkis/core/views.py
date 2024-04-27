@@ -7,8 +7,19 @@ from .restapi.serializers import TestSerializer, QuestionSerializer
 
 # Create your views here.
 
+# test handler
 
-@api_view(['GET', ])
+
+@api_view(['GET', 'UPDATE', 'DELETE'])
+def test_view(request, pk):
+    if request.method == "GET":
+        return get_test(request, pk)
+    elif request.method == "UPDATE":
+        return update_test(request, pk)
+    elif request.method == "DELETE":
+        return delete_test(request, pk)
+
+
 def get_test(request, pk):
     responses = {}
 
@@ -34,7 +45,6 @@ def create_test(request):
     return Response(serializer.data)
 
 
-@api_view(['POST', ])
 def update_test(request, pk):
     test = get_object_or_404(Test, pk=pk)
     serializer = TestSerializer(data=request.data, instance=test)
@@ -45,7 +55,6 @@ def update_test(request, pk):
     return Response(serializer.data)
 
 
-@api_view(['DELETE', ])
 def delete_test(request, pk):
     test = get_object_or_404(Test, pk=pk)
     test.delete()
@@ -53,7 +62,14 @@ def delete_test(request, pk):
     return Response("Object deleted succesfully", status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view(['POST', ])
+@api_view(['POST', 'UPDATE'])
+def questions_handler(request, pk):
+    if request.method == "POST":
+        return add_questions(request, pk)
+    elif request.method == "UPDATE":
+        return update_questions(request, pk)
+
+
 def add_questions(request, pk):
 
     for question in request.data:
@@ -68,3 +84,7 @@ def add_questions(request, pk):
     serializer = QuestionSerializer(posted_question, many=True)
 
     return Response(serializer.data)
+
+
+def update_questions(request, pk):
+    pass

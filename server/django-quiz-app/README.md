@@ -13,11 +13,12 @@ Project support is open source API that allow to create test and questions
 ### API Endpoints
 | HTTP Verbs | Endpoints | Action |
 | --- | --- | --- |
-| GET | test/:test_id | To retrieve a test detail with its questions |
 | POST | test/create/ | To create a new test |
-| POST | test/:test_id/update | To edit the detail of a test |
-| DELETE | test/:test_id/delete | To delete a test |
-| POST | test/:test_id/questions/add/ | To add questions to a test |
+| GET | test/:test_id/ | To retrieve a test detail with its questions |
+| UPDATE | test/:test_id/ | To edit the detail of a test |
+| DELETE | test/:test_id/ | To delete a test |
+| POST | test/:test_id/questions/ | To add questions to a test |
+| UPDATE | test/:test_id/questions/ | To edit questions to a test |
 ### Technologies Used
 * [Django](https://www.djangoproject.com/) Django is a high-level Python web framework used for backend
 ### Authors
