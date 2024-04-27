@@ -10,4 +10,6 @@ urlpatterns = [
     path('test/create/', views.create_test, name="test_create"),
     path('test/<int:pk>/update/', views.update_test, name="update_test"),
     path('test/<int:pk>/delete/', views.delete_test, name="delete_test"),
+    path('test/<int:pk>/questions/add/',
+         views.add_questions, name="add_questions"),
 ]
