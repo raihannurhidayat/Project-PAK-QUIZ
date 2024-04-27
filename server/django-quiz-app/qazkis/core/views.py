@@ -1,33 +1,46 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-from .models import Question
-
-from .forms import NewTestForm
-
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from .models import Test, Question
+from .restapi.serializers import TestSerializer
 
 # Create your views here.
 
 
-def get_question(request):
+@api_view(['GET', ])
+def get_test(request, pk):
+    test = get_object_or_404(Test, pk=pk)
+    serializer = TestSerializer(test)
 
-    question = Question.objects.all()
-
-    question_json = list(question.values())
-
-    return JsonResponse(question_json, safe=False)
+    return Response(serializer.data)
 
 
-def create_question(request):
+@api_view(['POST', ])
+def create_test(request):
+    serializer = TestSerializer(data=request.data)
 
-    if request.method == "POST":
-        form = NewTestForm()
+    if serializer.is_valid():
+        serializer.save()
 
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'message': 'Data saved successfully'})
-        else:
-            errors = form.errors.as_json()
-            return JsonResponse({'error': errors}, status=400)
+    return Response(serializer.data)
 
-    else:
-        return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
+
+@api_view(['POST', ])
+def update_test(request, pk):
+    test = get_object_or_404(Test, pk=pk)
+    serializer = TestSerializer(data=request.data, instance=test)
+
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+
+@api_view(['DELETE', ])
+def delete_test(request, pk):
+    test = get_object_or_404(Test, pk=pk)
+    test.delete()
+
+    return Response("Object deleted succesfully", status=status.HTTP_204_NO_CONTENT)
