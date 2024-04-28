@@ -1,7 +1,7 @@
 import React from "react";
-import { questions } from "../data/question";
+// import { questions } from "../data/question";
 
-const Review = ({ answare, index, setDisplay, setIndex }) => {
+const Review = ({ answare, index, setDisplay, setIndex,questions }) => {
   const handlePrev = () => {
     setIndex((prev) => prev - 1);
   };

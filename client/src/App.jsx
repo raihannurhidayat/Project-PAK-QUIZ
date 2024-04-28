@@ -8,6 +8,7 @@ import Review from "./pages/Review";
 import User from "./pages/User";
 import axios from "axios";
 import QuestionNew from "./pages/QuestionNew";
+import AddQuestion from "./pages/AddQuestion";
 
 function App() {
   const [display, setDisplay] = useState("user");
@@ -24,10 +25,10 @@ function App() {
 
   async function getAllData() {
     try {
-      const data = await fetch("http://127.0.0.1:8000/questions/");
+      const data = await fetch("http://127.0.0.1:8000/test/6");
       const result = await data.json();
 
-      const covertQuestion = result.map((item) => ({
+      const covertQuestion = result.Questions.map((item) => ({
         id: item.id,
         question: item.question,
         options: {
@@ -41,7 +42,7 @@ function App() {
 
       setQuestion(covertQuestion);
     } catch (error) {
-      console.log("Error");
+      console.log({ error });
     }
   }
 
@@ -55,8 +56,11 @@ function App() {
 
   return (
     <div className="h-screen flex flex-col">
-      {display !== "user" && display !== "new" && <Header display={display} />}
+      {display !== "user" && display !== "new" && display !== "add" && (
+        <Header display={display} />
+      )}
       <div className="w-full bg-charcoal flex-1">
+        {display === "add" && <AddQuestion />}
         {display === "user" && (
           <User setUser={setUser} setDisplay={setDisplay} user={user} />
         )}
@@ -64,6 +68,7 @@ function App() {
         {display === "review" && (
           <Review
             answare={answare}
+            questions={questions}
             index={index}
             setDisplay={setDisplay}
             setIndex={setIndex}
@@ -102,11 +107,15 @@ function App() {
             setScore={setScore}
             setDisplay={setDisplay}
             cheating={cheating}
+
           />
         )}
         {/* Feature end */}
       </div>
-      {display !== "user" && display !== "new" && display !== "question" && (
+
+      {display !== "user" && display !== "new" && display !== "add" && (
+
+      
         <Footer
           setAnsware={setAnsware}
           setIndex={setIndex}
@@ -117,6 +126,8 @@ function App() {
           setCheating={setCheating}
         />
       )}
+
+      {/* create question */}
     </div>
   );
 }
