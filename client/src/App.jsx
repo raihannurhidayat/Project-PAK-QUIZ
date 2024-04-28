@@ -99,16 +99,23 @@ function App() {
         {/* Feature start */}
         {display === "new" && (
           <QuestionNew
+            setIndex={setIndex}
+            setCheating={setCheating}
             answare={answare}
             questions={questions}
             setAnsware={setAnsware}
             setScore={setScore}
             setDisplay={setDisplay}
+            cheating={cheating}
+
           />
         )}
         {/* Feature end */}
       </div>
+
       {display !== "user" && display !== "new" && display !== "add" && (
+
+      
         <Footer
           setAnsware={setAnsware}
           setIndex={setIndex}
@@ -116,6 +123,7 @@ function App() {
           handleReset={handleReset}
           setDisplay={setDisplay}
           setUser={setUser}
+          setCheating={setCheating}
         />
       )}
 
