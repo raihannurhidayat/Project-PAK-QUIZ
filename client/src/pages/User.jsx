@@ -1,16 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 
 const User = ({ setUser, setDisplay,user }) => {
+  const [temp, setTemp] = useState("")
   const handleClick = (e) => {
     e.preventDefault();
     setUser({
       id: Math.ceil(Math.random(1)) * Math.floor(Math.random(2)),
       user: e.target.value,
     });
+
+    setTemp(e.target.value)
   };
 
   const handleLogin = () => {
-    setDisplay("start")
+    if(temp === "admin123"){
+      setDisplay("admin")
+    } else {
+      setDisplay("start")
+    }
   }
 
   return (

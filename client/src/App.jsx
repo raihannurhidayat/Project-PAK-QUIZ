@@ -9,6 +9,7 @@ import User from "./pages/User";
 import axios from "axios";
 import QuestionNew from "./pages/QuestionNew";
 import AddQuestion from "./pages/AddQuestion";
+import AdminPanel from "./pages/AdminPanel";
 
 function App() {
   const [display, setDisplay] = useState("user");
@@ -55,76 +56,86 @@ function App() {
   };
 
   return (
-    <div className="h-screen flex flex-col">
-      {display !== "user" && display !== "new" && display !== "add" && (
-        <Header display={display} />
-      )}
-      <div className="w-full bg-charcoal flex-1">
-        {display === "add" && <AddQuestion />}
-        {display === "user" && (
-          <User setUser={setUser} setDisplay={setDisplay} user={user} />
-        )}
-        {display === "start" && <Start setDisplay={setDisplay} />}
-        {display === "review" && (
-          <Review
-            answare={answare}
-            questions={questions}
-            index={index}
-            setDisplay={setDisplay}
-            setIndex={setIndex}
-          />
-        )}
-        {display === "score" && (
-          <Score
-            user={user}
-            score={score}
-            setIndex={setIndex}
-            setDisplay={setDisplay}
-          />
-        )}
-        {display === "question" && (
-          <Question
-            setDisplay={setDisplay}
-            answare={answare}
-            setAnsware={setAnsware}
-            index={index}
-            setIndex={setIndex}
-            setScore={setScore}
-            score={score}
-            questions={questions}
-            cheating={cheating}
-            setCheating={setCheating}
-          />
-        )}
-        {/* Feature start */}
-        {display === "new" && (
-          <QuestionNew
-            setIndex={setIndex}
-            setCheating={setCheating}
-            answare={answare}
-            questions={questions}
-            setAnsware={setAnsware}
-            setScore={setScore}
-            setDisplay={setDisplay}
-            cheating={cheating}
-          />
-        )}
-        {/* Feature end */}
-      </div>
+    <div>
+      {display === "admin" ? (
+        <AdminPanel />
+      ) : (
+        <div className="h-screen flex flex-col">
+          {display !== "user" &&
+            display !== "new" &&
+            display !== "add" &&
+            display !== "admin" && <Header display={display} />}
+          <div className="w-full bg-charcoal flex-1">
+            {display === "add" && <AddQuestion />}
+            {display === "user" && (
+              <User setUser={setUser} setDisplay={setDisplay} user={user} />
+            )}
+            {display === "start" && <Start setDisplay={setDisplay} />}
+            {display === "review" && (
+              <Review
+                answare={answare}
+                questions={questions}
+                index={index}
+                setDisplay={setDisplay}
+                setIndex={setIndex}
+              />
+            )}
+            {display === "score" && (
+              <Score
+                user={user}
+                score={score}
+                setIndex={setIndex}
+                setDisplay={setDisplay}
+              />
+            )}
+            {display === "question" && (
+              <Question
+                setDisplay={setDisplay}
+                answare={answare}
+                setAnsware={setAnsware}
+                index={index}
+                setIndex={setIndex}
+                setScore={setScore}
+                score={score}
+                questions={questions}
+                cheating={cheating}
+                setCheating={setCheating}
+              />
+            )}
+            {/* Feature start */}
+            {display === "new" && (
+              <QuestionNew
+                setIndex={setIndex}
+                setCheating={setCheating}
+                answare={answare}
+                questions={questions}
+                setAnsware={setAnsware}
+                setScore={setScore}
+                setDisplay={setDisplay}
+                cheating={cheating}
+              />
+            )}
+            {/* Feature end */}
+          </div>
 
-      {display !== "user" && display !== "new" && display !== "add" && (
-        <Footer
-          setAnsware={setAnsware}
-          setIndex={setIndex}
-          setScore={setScore}
-          handleReset={handleReset}
-          setDisplay={setDisplay}
-          setUser={setUser}
-          setCheating={setCheating}
-        />
-      )}
+          {display !== "user" &&
+            display !== "new" &&
+            display !== "add" &&
+            display !== "admin" && (
+              <Footer
+                setAnsware={setAnsware}
+                setIndex={setIndex}
+                setScore={setScore}
+                handleReset={handleReset}
+                setDisplay={setDisplay}
+                setUser={setUser}
+                setCheating={setCheating}
+              />
+            )}
 
-      {/* create question */}
+          {/* create question */}
+        </div>
+      )}
     </div>
   );
 }
