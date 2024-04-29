@@ -65,7 +65,7 @@ def delete_test(request, pk):
     test = get_object_or_404(Test, pk=pk)
     test.delete()
 
-    return Response("Object deleted succesfully", status=status.HTTP_204_NO_CONTENT)
+    return Response({"message": f"Object {pk} deleted succesfully"}, status=status.HTTP_200_OK)
 
 
 def add_questions(request: list, pk, delete_existing=False):
