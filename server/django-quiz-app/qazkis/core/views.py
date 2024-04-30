@@ -1,11 +1,39 @@
 from django.shortcuts import render, get_object_or_404
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from .models import Test, Question
 from .restapi.serializers import TestSerializer, QuestionSerializer
 
 # Create your views here.
+
+# admin only api
+
+
+@api_view(['GET', ])
+@permission_classes([permissions.IsAdminUser])
+def get_all_test(request):
+    responses = []
+
+    tests = Test.objects.all()
+
+    for instance in tests:
+        pk = instance.pk
+
+        test_serializer = TestSerializer(instance)
+
+        questions = Question.objects.filter(test_id=pk)
+        question_serializer = QuestionSerializer(questions, many=True)
+
+        test_question = {
+            str(pk): test_serializer.data,
+            "questions": question_serializer.data
+        }
+
+        responses.append(test_question)
+
+    return Response(responses)
+
 
 # test handler
 
