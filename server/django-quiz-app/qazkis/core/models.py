@@ -26,6 +26,6 @@ class Grade(models.Model):
     test_id = models.ForeignKey(
         Test, related_name="grades", on_delete=models.CASCADE)
     student_name = models.CharField(max_length=100)
-    student_id = models.CharField(blank=True, null=True)
-    student_answer = models.CharField()
+    student_id = models.CharField(max_length=50, blank=True, null=True)
+    student_answer = models.CharField(max_length=100)
     student_grade = models.IntegerField(editable=False, blank=True)
