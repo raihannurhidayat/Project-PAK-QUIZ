@@ -56,7 +56,7 @@ const TabNotificationExample = ({ setNotif, notif, setIndex, setAnsware, setChea
                     <div className="relative p-6 flex-auto">
                       <p className="my-4 text-blueGray-500 text-lg leading-relaxed">
                         Sistem menemukan bahwa kegiatan yang dilakukan anda
-                        melanggar aturan dalam berjalannya Ujian maka Anda nilai
+                        melanggar aturan dalam berjalannya Ujian maka nilai
                         akhir anda akan{" "}
                         <span className="text-red-600">DIKURANGI </span>
                         dan jawaban anda akan di <span className="text-red-600">RESET</span>

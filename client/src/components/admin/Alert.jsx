@@ -27,11 +27,11 @@ const Alert = ({ setAlert }) => {
         <div className="flex-1">
           <strong className="block font-medium text-gray-900">
             {" "}
-            Changes saved{" "}
+            Questions Created{" "}
           </strong>
 
           <p className="mt-1 text-sm text-gray-700">
-            Your product changes have been saved.
+            Your questions has been created.
           </p>
         </div>
 

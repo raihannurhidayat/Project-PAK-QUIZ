@@ -26,7 +26,7 @@ function App() {
 
   async function getAllData() {
     try {
-      const data = await fetch("http://127.0.0.1:8000/test/10");
+      const data = await fetch("http://127.0.0.1:8000/test/14");
       const result = await data.json();
 
       const covertQuestion = result.Questions.map((item) => ({
