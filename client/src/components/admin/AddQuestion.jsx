@@ -7,9 +7,10 @@ const AddQuestion = () => {
   const [quizData, setQuizData] = useState([]);
   const [numQuestions, setNumQuestions] = useState(1);
 
-  const [status, setStatus] = useState(false);
-  const [alert, setAlert] = useState(false)
+  const { name, description } = data;
 
+  const [status, setStatus] = useState(false);
+  const [alert, setAlert] = useState(false);
 
   const handleAddQuestions = () => {
     setStatus(false);
@@ -95,7 +96,7 @@ const AddQuestion = () => {
       if (response.ok) {
         const data = await response.json();
         console.log({ data });
-        setAlert(true)
+        setAlert(true);
       }
     } catch (error) {
       console.log({ error });
@@ -104,6 +105,10 @@ const AddQuestion = () => {
       setResult([]);
       setQuizData([]);
       setNumQuestions(1);
+      setData({
+        name: "",
+        description: "",
+      });
     }
   };
 
@@ -126,6 +131,7 @@ const AddQuestion = () => {
           </label>
           <input
             onChange={handleChange}
+            value={name}
             name="name"
             type="text"
             id="name"
@@ -141,6 +147,7 @@ const AddQuestion = () => {
           </label>
           <textarea
             onChange={handleChange}
+            value={description}
             name="description"
             type="text"
             id="name"
