@@ -20,3 +20,12 @@ class Question(models.Model):
     option_c = models.TextField()
     option_d = models.TextField()
     answer = models.CharField(max_length=1)
+
+
+class Grade(models.Model):
+    test_id = models.ForeignKey(
+        Test, related_name="grades", on_delete=models.CASCADE)
+    student_name = models.CharField(max_length=100)
+    student_id = models.CharField(blank=True, null=True)
+    student_answer = models.CharField()
+    student_grade = models.IntegerField(editable=False, blank=True)
