@@ -10,4 +10,6 @@ urlpatterns = [
     path('debug/get-test/', views.get_all_test),
     path('test/create/', views.create_test),
     path('test/<int:pk>/', views.test_view),
+    path('test/result/<int:pk>/', views.get_result),
+    path('test/result/post/', views.post_result),
 ]

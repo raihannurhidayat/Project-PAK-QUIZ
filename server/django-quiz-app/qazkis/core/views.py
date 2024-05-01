@@ -1,9 +1,10 @@
+from itertools import zip_longest
 from django.shortcuts import render, get_object_or_404
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from .models import Test, Question
-from .restapi.serializers import TestSerializer, QuestionSerializer
+from .models import Test, Question, Grade
+from .restapi.serializers import TestSerializer, QuestionSerializer, GradeSerializer
 
 # Create your views here.
 
@@ -114,3 +115,46 @@ def add_questions(request: list, pk, delete_existing=False):
     serializer = QuestionSerializer(posted_question, many=True)
 
     return serializer.data
+
+
+# result handler
+@api_view(['GET', ])
+def result_handler(request, pk):
+    if request.method == "GET":
+        return get_result(request, pk)
+
+
+def get_result(request, pk):
+    result = get_object_or_404(Grade, pk=pk)
+    serializer = GradeSerializer(result)
+
+    return Response(serializer.data)
+
+
+@api_view(['POST', ])
+def post_result(request):
+    serializer = GradeSerializer(data=request.data)
+
+    if serializer.is_valid():
+
+        validated_data = serializer.validated_data
+        student_answer = validated_data['student_answer']
+
+        total_grade = 0
+
+        questions_answer = Question.objects.filter(
+            test_id=validated_data['test_id']).values()
+
+        grade_perquestion = round((100/len(questions_answer)), 2)
+
+        for (correct_answer, answer) in zip_longest(questions_answer, student_answer, fillvalue=None):
+            if correct_answer['answer'] == answer:
+                total_grade += grade_perquestion
+
+        instance = serializer.save()
+        pk = instance.pk
+
+        instance.student_grade = total_grade
+        instance.save()
+
+    return get_result(request, pk=pk)
