@@ -1,13 +1,16 @@
 import React, { useState } from "react";
+import QuestionNotFound from "./QuestionNotFound";
 
-const Start = ({ setDisplay }) => {
+const Start = ({ setDisplay, questions }) => {
   const handleFullScreen = () => {
     document.documentElement.requestFullscreen();
   };
 
   return (
     <div className="flex flex-col gap-5 items-center h-full justify-center">
-      <div className="text-english-lavender text-[120px]">QUIZ APP</div>
+      {questions.length > 0 ? (
+        <>
+          <div className="text-english-lavender text-[120px]">QUIZ APP</div>
       <div
         onClick={() => {
           setDisplay("question");
@@ -29,6 +32,8 @@ const Start = ({ setDisplay }) => {
       <div className="text-english-lavender text-[24px] text-center">
         Dont let the setback define you <br /> let them be stepping to triumph
       </div>
+        </>
+      ) : <QuestionNotFound setDisplay={setDisplay} />}
     </div>
   );
 };
