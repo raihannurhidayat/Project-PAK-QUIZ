@@ -12,7 +12,7 @@ from .restapi.serializers import TestSerializer, QuestionSerializer, GradeSerial
 
 
 @api_view(['GET', ])
-@permission_classes([permissions.IsAdminUser])
+# @permission_classes([permissions.IsAdminUser])
 def get_all_test(request):
     responses = []
 
@@ -21,17 +21,22 @@ def get_all_test(request):
     for instance in tests:
         pk = instance.pk
 
-        test_serializer = TestSerializer(instance)
+        data = get_test(request, pk=pk, only_data=True)
 
-        questions = Question.objects.filter(test_id=pk)
-        question_serializer = QuestionSerializer(questions, many=True)
+        # test_serializer = TestSerializer(instance)
 
-        test_question = {
-            str(pk): test_serializer.data,
-            "questions": question_serializer.data
-        }
+        # questions = Question.objects.filter(test_id=pk)
+        # questions_serializer = QuestionSerializer(questions, many=True)
 
-        responses.append(test_question)
+        # modified_questions = questions_serializer.data
+        # for q in modified_questions:
+        #     q.pop("test_id")
+
+        # test_question = test_serializer.data
+        # test_question['test_id'] = pk
+        # test_question['questions'] = modified_questions
+
+        responses.append(data)
 
     return Response(responses)
 
@@ -49,17 +54,27 @@ def test_view(request, pk):
         return delete_test(request, pk)
 
 
-def get_test(request, pk):
+def get_test(request, pk, only_data=False):
     responses = {}
 
     test = get_object_or_404(Test, pk=pk)
     test_serializer = TestSerializer(test)
 
+    modified_test = test_serializer.data
+    modified_test["test_id"] = pk
+
     questions = Question.objects.filter(test_id=pk)
     questions_serializer = QuestionSerializer(questions, many=True)
 
-    responses['Test'] = test_serializer.data
-    responses['Questions'] = questions_serializer.data
+    modified_questions = questions_serializer.data
+    for q in modified_questions:
+        q.pop("test_id")
+
+    responses['Test'] = modified_test
+    responses['Questions'] = modified_questions
+
+    if only_data == True:
+        return responses
 
     return Response(responses)
 
