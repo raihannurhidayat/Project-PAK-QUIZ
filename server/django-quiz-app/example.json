@@ -1,4 +1,5 @@
 [
+    // Post or update test
     {
         "name": "Quiz 4",
         "description": "Quiz Description",
@@ -21,5 +22,19 @@
             "option_d": "Option D",
             "answer": "B"
         }
-    ]
+    ],
+
+    // Post test result
+    {
+        "test_id": 1,
+        "student_name": "Person name",
+        "student_id": "",
+        "student_answer": [
+            "A",
+            "",
+            "C",
+            "D",
+            "B"
+        ]
+    }
 ]
