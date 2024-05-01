@@ -104,6 +104,7 @@ const AddQuestion = () => {
       setData([]);
       setResult([]);
       setQuizData([]);
+      setStatus(false)
       setNumQuestions(1);
       setData({
         name: "",
