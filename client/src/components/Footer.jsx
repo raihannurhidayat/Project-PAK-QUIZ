@@ -1,13 +1,14 @@
 import React from "react";
 
 const Footer = ({
-  handleReset,
   setDisplay,
   setIndex,
   setScore,
   setAnsware,
   setUser,
-  setCheating
+  setCheating,
+  setCodeQuestion,
+  setStatusFetch
 }) => {
   return (
     <div className="bg-[#435866] w-full flex items-center px-[73px] py-[9px] text-english-lavender h-[88px] justify-between">
@@ -20,6 +21,8 @@ const Footer = ({
             setUser({});
             setDisplay("user");
             setCheating(0)
+            setCodeQuestion("")
+            setStatusFetch(false)
           }}
           className="cursor-pointer bg-copper border-[6px] border-pastelPink rounded-full fill-pastelPink hover:border-white hover:scale-110 hover:shadow-2xl hover:fill-white"
           xmlns="http://www.w3.org/2000/svg"

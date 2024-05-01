@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-const User = ({ setUser, setDisplay,user }) => {
-  const [temp, setTemp] = useState("")
+const User = ({ setUser, setDisplay, user, setCodeQuestion, setStatusFetch }) => {
+  const [temp, setTemp] = useState("");
   const handleClick = (e) => {
     e.preventDefault();
     setUser({
@@ -9,16 +9,17 @@ const User = ({ setUser, setDisplay,user }) => {
       user: e.target.value,
     });
 
-    setTemp(e.target.value)
+    setTemp(e.target.value);
   };
 
   const handleLogin = () => {
-    if(temp === "admin123"){
-      setDisplay("admin")
+    if (temp === "admin123") {
+      setDisplay("admin");
     } else {
-      setDisplay("start")
+      setDisplay("start");
+      setStatusFetch(true)
     }
-  }
+  };
 
   return (
     <div className="w-full bg-white h-full flex justify-center items-center">
@@ -37,7 +38,17 @@ const User = ({ setUser, setDisplay,user }) => {
             className="text-sm border rounded w-full py-2 px-3 text-slate-700 opacity-90"
             placeholder="Masukan Nama Anda"
           />
-          <button onClick={handleLogin} className="cursor-pointer block text-slate-700 bg-slate-400 p-2 rounded-sm font-semibold mb-2">
+          <input
+            onChange={(e) => setCodeQuestion(e.target.value)}
+            name="name"
+            type="text"
+            className="text-sm border rounded w-full py-2 px-3 text-slate-700 opacity-90"
+            placeholder="Masukan Kode Soal"
+          />
+          <button
+            onClick={handleLogin}
+            className="cursor-pointer block text-slate-700 bg-slate-400 p-2 rounded-sm font-semibold mb-2"
+          >
             Login
           </button>
         </div>

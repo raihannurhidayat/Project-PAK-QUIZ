@@ -19,14 +19,19 @@ function App() {
   const [user, setUser] = useState({});
   const [questions, setQuestion] = useState([]);
   const [cheating, setCheating] = useState(0);
+  const [codeQuestion, setCodeQuestion] = useState("");
+  const [statusFetch, setStatusFetch] = useState(false);
+  const [statusQuestion, setStatusQuestion] = useState(false)
 
   useEffect(() => {
-    getAllData();
-  }, []);
+    if (statusFetch) {
+      getAllData();
+    }
+  }, [statusFetch]);
 
   async function getAllData() {
     try {
-      const data = await fetch("http://127.0.0.1:8000/test/14");
+      const data = await fetch(`http://127.0.0.1:8000/test/${codeQuestion}`);
       const result = await data.json();
 
       const covertQuestion = result.Questions.map((item) => ({
@@ -42,8 +47,15 @@ function App() {
       }));
 
       setQuestion(covertQuestion);
+      console.log(result)
+      if(result.Test.closed){
+        console.log("ditutup")
+      }
     } catch (error) {
-      console.log({ error });
+      setQuestion([]);
+      console.log({
+        error: "code question salah atau sudah tidak aktif",
+      });
     }
   }
 
@@ -52,7 +64,10 @@ function App() {
     setAnsware({});
     setScore({});
     setUser({});
-    setDisplay("start");
+    setDisplay("user");
+    setCheating(0);
+    setCodeQuestion("");
+    setStatusFetch(false);
   };
 
   return (
@@ -68,9 +83,17 @@ function App() {
           <div className="w-full bg-charcoal flex-1">
             {display === "add" && <AddQuestion />}
             {display === "user" && (
-              <User setUser={setUser} setDisplay={setDisplay} user={user} />
+              <User
+                setUser={setUser}
+                setDisplay={setDisplay}
+                setStatusFetch={setStatusFetch}
+                setCodeQuestion={setCodeQuestion}
+                user={user}
+              />
             )}
-            {display === "start" && <Start setDisplay={setDisplay} />}
+            {display === "start" && (
+              <Start questions={questions} setDisplay={setDisplay} />
+            )}
             {display === "review" && (
               <Review
                 answare={answare}
@@ -120,7 +143,7 @@ function App() {
 
           {display !== "user" &&
             display !== "new" &&
-            display !== "add" &&
+            display !== "add" && display !== "question" &&
             display !== "admin" && (
               <Footer
                 setAnsware={setAnsware}
@@ -130,6 +153,8 @@ function App() {
                 setDisplay={setDisplay}
                 setUser={setUser}
                 setCheating={setCheating}
+                setCodeQuestion={setCodeQuestion}
+                setStatusFetch={setStatusFetch}
               />
             )}
 
