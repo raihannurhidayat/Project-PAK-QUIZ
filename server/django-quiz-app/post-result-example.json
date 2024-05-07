@@ -5,9 +5,7 @@
     "student_id": "",
     "student_answer": [
         "A",
-        "",
-        "C",
-        "D",
         "B"
-    ]
+    ],
+    "student_grade": 100
 }
