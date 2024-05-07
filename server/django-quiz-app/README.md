@@ -19,10 +19,12 @@ Please see [example.json](https://github.com/raihannurhidayat/Project-PAK-QUIZ/b
 | GET        | debug/get-result/       | Admin        | Get all results                              |
 | POST       | test/create/            | User         | To create a new test                         |
 | GET        | test/:test_id/          | User         | To retrieve a test detail with its questions |
-| UPDATE     | test/:test_id/          | User         | To edit the detail of a test                 |
+| PUT        | test/:test_id/          | User         | To edit the detail of a test                 |
 | DELETE     | test/:test_id/          | User         | To delete a test                             |
-| GET        | test/result/:result_id/ | User         | To retrieve a test result detail             |
 | POST       | test/result/post/       | User         | To submit a test result                      |
+| GET        | test/result/:result_id/ | User         | To retrieve a test result detail             |
+| PUT        | test/result/:result_id/ | User         | To edit the detail of a result               |
+| DELETE     | test/result/:result_id/ | User         | To delete a result                           |
 ### Technologies Used
 * [Django](https://www.djangoproject.com/) Django is a high-level Python web framework used for backend
 ### Authors
