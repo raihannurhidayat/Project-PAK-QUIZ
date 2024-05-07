@@ -41,6 +41,7 @@ def get_all_test(request):
     return Response(responses)
 
 
+@api_view(['GET', ])
 def get_all_result(request):
     responses = []
 
@@ -49,7 +50,9 @@ def get_all_result(request):
     for instance in grades:
         pk = instance.pk
 
-        data = get_result(request, pk=pk, only_data=True)
+        data = {"grade_id": pk}
+
+        data.update(get_result(request, pk=pk, only_data=True))
 
         responses.append(data)
 
