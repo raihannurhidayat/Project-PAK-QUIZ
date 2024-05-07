@@ -149,10 +149,14 @@ def add_questions(request: list, pk, delete_existing=False):
 
 
 # result handler
-@api_view(['GET', ])
+@api_view(['GET', 'PUT', 'DELETE', ])
 def result_handler(request, pk):
     if request.method == "GET":
         return get_result(request, pk)
+    elif request.method == "PUT":
+        return update_result(request, pk)
+    elif request.method == "DELETE":
+        return delete_result(request, pk)
 
 
 def get_result(request, pk, only_data=False):
@@ -163,6 +167,23 @@ def get_result(request, pk, only_data=False):
         return serializer.data
 
     return Response(serializer.data)
+
+
+def update_result(request, pk):
+    instance = get_object_or_404(Grade, pk=pk)
+    serializer = GradeSerializer(data=request.data, instance=instance)
+
+    if serializer.is_valid():
+        instance.save()
+
+    return get_result(request, pk)
+
+
+def delete_result(request, pk):
+    instance = get_object_or_404(Grade, pk=pk)
+    instance.delete()
+
+    return Response({"message": f"Object {pk} deleted succesfully"}, status=status.HTTP_200_OK)
 
 
 @api_view(['POST', ])
