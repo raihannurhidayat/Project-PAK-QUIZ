@@ -28,4 +28,4 @@ class Grade(models.Model):
     student_name = models.CharField(max_length=100)
     student_id = models.CharField(max_length=50, blank=True, null=True)
     student_answer = models.JSONField(blank=True, null=True)
-    student_grade = models.IntegerField(editable=False, blank=True, null=True)
+    student_grade = models.IntegerField(default=0)

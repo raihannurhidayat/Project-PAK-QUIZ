@@ -170,24 +170,24 @@ def post_result(request):
 
     if serializer.is_valid():
 
-        validated_data = serializer.validated_data
-        student_answer = validated_data['student_answer']
+        # validated_data = serializer.validated_data
+        # student_answer = validated_data['student_answer']
 
-        total_grade = 0
+        # total_grade = 0
 
-        questions_answer = Question.objects.filter(
-            test_id=validated_data['test_id']).values()
+        # questions_answer = Question.objects.filter(
+        #     test_id=validated_data['test_id']).values()
 
-        grade_perquestion = round((100/len(questions_answer)), 2)
+        # grade_perquestion = round((100/len(questions_answer)), 2)
 
-        for (correct_answer, answer) in zip_longest(questions_answer, student_answer, fillvalue=None):
-            if correct_answer['answer'] == answer:
-                total_grade += grade_perquestion
+        # for (correct_answer, answer) in zip_longest(questions_answer, student_answer, fillvalue=None):
+        #     if correct_answer['answer'] == answer:
+        #         total_grade += grade_perquestion
 
         instance = serializer.save()
         pk = instance.pk
 
-        instance.student_grade = total_grade
+        # instance.student_grade = total_grade
         instance.save()
 
     return get_result(request, pk=pk)
