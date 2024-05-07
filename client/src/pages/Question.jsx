@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { questions } from "../data/question";
 import TabNotificationExample from "../components/TabNotification";
 
 const Question = ({
@@ -11,7 +10,9 @@ const Question = ({
   setDisplay,
   questions,
   cheating,
-  setCheating
+  setCheating,
+  testId,
+  user,
 }) => {
   const [notif, setNotif] = useState(false);
 
@@ -27,21 +28,47 @@ const Question = ({
     setAnsware({ ...answare, [num + 1]: key });
   };
 
-  const handleFinish = () => {
+  const handleFinish =async () => {
     let result = 0;
-    let subtraction = cheating * 15
+    let subtraction = cheating * 15;
     questions.map((key, index) => {
       if (key.answer == answare[index + 1]) {
         result++;
       }
     });
-    
+
     setScore({
-      score: ((result / questions.length) * 100) - subtraction,
+      score: (result / questions.length) * 100 - subtraction,
       true: result,
       false: questions.length - result,
     });
 
+    const data = {
+      test_id: testId,
+      student_name: user.user,
+      student_id: "",
+      answers_true: result,
+      answers_false: questions.length - result,
+      student_answer: [answare],
+      n_cheating: cheating,
+      student_grade: (result / questions.length) * 100,
+      student_grade_final: (result / questions.length) * 100 - subtraction,
+    };
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/test/result/post/", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
+      if(response.ok){
+        const res = await response.json()
+      }
+    } catch (error) {
+      console.log("Gagal Create User")
+    }
     setDisplay("score");
   };
 
@@ -105,7 +132,13 @@ const Question = ({
           </div>
         )}
       </div>
-      <TabNotificationExample setCheating={setCheating} setIndex={setIndex} notif={notif} setNotif={setNotif} setAnsware={setAnsware} /> 
+      <TabNotificationExample
+        setCheating={setCheating}
+        setIndex={setIndex}
+        notif={notif}
+        setNotif={setNotif}
+        setAnsware={setAnsware}
+      />
     </div>
   );
 };
