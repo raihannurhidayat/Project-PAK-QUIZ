@@ -6,7 +6,7 @@ import ListQuestion from "../components/admin/ListQuestion";
 import ListUser from "../components/admin/ListUser";
 
 const AdminPanel = () => {
-  const [display, setDisplay] = useState("test")
+  const [display, setDisplay] = useState("Users")
   return (
     <>
     <div className="flex">

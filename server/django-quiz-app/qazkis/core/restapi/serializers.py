@@ -18,5 +18,5 @@ class QuestionSerializer(serializers.ModelSerializer):
 class GradeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Grade
-        fields = ('test_id', 'student_name', 'student_id',
-                  'student_answer', 'student_grade', )
+        fields = ('id', 'test_id', 'student_name', 'student_id', 'answers_true', 'answers_false',
+                  'student_answer', 'n_cheating', 'student_grade', 'student_grade_final', )

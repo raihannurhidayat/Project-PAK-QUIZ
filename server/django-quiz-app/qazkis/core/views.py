@@ -41,6 +41,22 @@ def get_all_test(request):
     return Response(responses)
 
 
+@api_view(['GET', ])
+def get_all_result(request):
+    responses = []
+
+    grades = Grade.objects.all()
+
+    for instance in grades:
+        pk = instance.pk
+
+        data = get_result(request, pk=pk, only_data=True)
+
+        responses.append(data)
+
+    return Response(responses)
+
+
 # test handler
 
 
@@ -133,17 +149,41 @@ def add_questions(request: list, pk, delete_existing=False):
 
 
 # result handler
-@api_view(['GET', ])
+@api_view(['GET', 'PUT', 'DELETE', ])
 def result_handler(request, pk):
     if request.method == "GET":
         return get_result(request, pk)
+    elif request.method == "PUT":
+        return update_result(request, pk)
+    elif request.method == "DELETE":
+        return delete_result(request, pk)
 
 
-def get_result(request, pk):
+def get_result(request, pk, only_data=False):
     result = get_object_or_404(Grade, pk=pk)
     serializer = GradeSerializer(result)
 
+    if only_data == True:
+        return serializer.data
+
     return Response(serializer.data)
+
+
+def update_result(request, pk):
+    instance = get_object_or_404(Grade, pk=pk)
+    serializer = GradeSerializer(data=request.data, instance=instance)
+
+    if serializer.is_valid():
+        serializer.save()
+
+    return get_result(request, pk)
+
+
+def delete_result(request, pk):
+    instance = get_object_or_404(Grade, pk=pk)
+    instance.delete()
+
+    return Response({"message": f"Object {pk} deleted succesfully"}, status=status.HTTP_200_OK)
 
 
 @api_view(['POST', ])
@@ -152,24 +192,24 @@ def post_result(request):
 
     if serializer.is_valid():
 
-        validated_data = serializer.validated_data
-        student_answer = validated_data['student_answer']
+        # validated_data = serializer.validated_data
+        # student_answer = validated_data['student_answer']
 
-        total_grade = 0
+        # total_grade = 0
 
-        questions_answer = Question.objects.filter(
-            test_id=validated_data['test_id']).values()
+        # questions_answer = Question.objects.filter(
+        #     test_id=validated_data['test_id']).values()
 
-        grade_perquestion = round((100/len(questions_answer)), 2)
+        # grade_perquestion = round((100/len(questions_answer)), 2)
 
-        for (correct_answer, answer) in zip_longest(questions_answer, student_answer, fillvalue=None):
-            if correct_answer['answer'] == answer:
-                total_grade += grade_perquestion
+        # for (correct_answer, answer) in zip_longest(questions_answer, student_answer, fillvalue=None):
+        #     if correct_answer['answer'] == answer:
+        #         total_grade += grade_perquestion
 
         instance = serializer.save()
         pk = instance.pk
 
-        instance.student_grade = total_grade
+        # instance.student_grade = total_grade
         instance.save()
 
     return get_result(request, pk=pk)

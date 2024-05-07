@@ -3,11 +3,13 @@
     "test_id": 1,
     "student_name": "Person name",
     "student_id": "",
+    "answers_true": 2,
+    "answers_false": 0,
     "student_answer": [
         "A",
-        "",
-        "C",
-        "D",
         "B"
-    ]
+    ],
+    "n_cheating": 0,
+    "student_grade": 100,
+    "student_grade_final": 100
 }

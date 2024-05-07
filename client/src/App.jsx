@@ -22,6 +22,7 @@ function App() {
   const [codeQuestion, setCodeQuestion] = useState("");
   const [statusFetch, setStatusFetch] = useState(false);
   const [statusQuestion, setStatusQuestion] = useState(false)
+  const [testId, setTestId] = useState(0)
 
   useEffect(() => {
     if (statusFetch) {
@@ -47,7 +48,7 @@ function App() {
       }));
 
       setQuestion(covertQuestion);
-      console.log(result)
+      setTestId(result.Test.test_id)
       if(result.Test.closed){
         console.log("ditutup")
       }
@@ -123,6 +124,8 @@ function App() {
                 questions={questions}
                 cheating={cheating}
                 setCheating={setCheating}
+                testId={testId}
+                user={user}
               />
             )}
             {/* Feature start */}
