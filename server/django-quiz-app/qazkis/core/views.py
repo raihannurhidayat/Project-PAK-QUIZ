@@ -50,9 +50,7 @@ def get_all_result(request):
     for instance in grades:
         pk = instance.pk
 
-        data = {"grade_id": pk}
-
-        data.update(get_result(request, pk=pk, only_data=True))
+        data = get_result(request, pk=pk, only_data=True)
 
         responses.append(data)
 
