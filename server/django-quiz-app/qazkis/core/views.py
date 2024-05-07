@@ -174,7 +174,7 @@ def update_result(request, pk):
     serializer = GradeSerializer(data=request.data, instance=instance)
 
     if serializer.is_valid():
-        instance.save()
+        serializer.save()
 
     return get_result(request, pk)
 
