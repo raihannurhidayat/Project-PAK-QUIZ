@@ -13,15 +13,16 @@ Project support is open source API that allow to create test and questions
 * Run `python manage.py runserver` to start the api.
 ### API Endpoints
 Please see [example.json](https://github.com/raihannurhidayat/Project-PAK-QUIZ/blob/master/server/example.json) for request body format.
-| HTTP Verbs | Endpoints | Authenticate | Action |
-| --- | --- | --- | --- |
-| GET | debug/get-test/ | Admin | Get all tests along with its questions |
-| POST | test/create/ | User | To create a new test |
-| GET | test/:test_id/ | User | To retrieve a test detail with its questions |
-| UPDATE | test/:test_id/ | User | To edit the detail of a test |
-| DELETE | test/:test_id/ | User | To delete a test |
-| GET | test/result/:result_id/ | User | To retrieve a test result detail |
-| POST | test/result/post/ | User | To submit a test result |
+| HTTP Verbs | Endpoints               | Authenticate | Action                                       |
+| ---------- | ----------------------- | ------------ | -------------------------------------------- |
+| GET        | debug/get-test/         | Admin        | Get all tests along with its questions       |
+| GET        | debug/get-result/       | Admin        | Get all results                              |
+| POST       | test/create/            | User         | To create a new test                         |
+| GET        | test/:test_id/          | User         | To retrieve a test detail with its questions |
+| UPDATE     | test/:test_id/          | User         | To edit the detail of a test                 |
+| DELETE     | test/:test_id/          | User         | To delete a test                             |
+| GET        | test/result/:result_id/ | User         | To retrieve a test result detail             |
+| POST       | test/result/post/       | User         | To submit a test result                      |
 ### Technologies Used
 * [Django](https://www.djangoproject.com/) Django is a high-level Python web framework used for backend
 ### Authors
