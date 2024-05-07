@@ -41,6 +41,21 @@ def get_all_test(request):
     return Response(responses)
 
 
+def get_all_result(request):
+    responses = []
+
+    grades = Grade.objects.all()
+
+    for instance in grades:
+        pk = instance.pk
+
+        data = get_result(request, pk=pk, only_data=True)
+
+        responses.append(data)
+
+    return Response(responses)
+
+
 # test handler
 
 
@@ -139,9 +154,12 @@ def result_handler(request, pk):
         return get_result(request, pk)
 
 
-def get_result(request, pk):
+def get_result(request, pk, only_data=False):
     result = get_object_or_404(Grade, pk=pk)
     serializer = GradeSerializer(result)
+
+    if only_data == True:
+        return serializer.data
 
     return Response(serializer.data)
 
