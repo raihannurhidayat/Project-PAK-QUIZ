@@ -92,7 +92,7 @@ const AddQuestion = () => {
           "Content-type": "application/json",
         },
       });
-
+      console.log(result)
       if (response.ok) {
         const data = await response.json();
         console.log({ data });

@@ -42,6 +42,32 @@ const ListQuestion = () => {
     }
   }
 
+  async function editQuestion(question) {
+    const questionInfo = question.Test;
+    const questionList = question.Questions;
+    const editQuestion = { ...questionInfo, closed: !questionInfo.closed };
+    const result = [editQuestion, questionList];
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/test/${question.Test.test_id}/`,
+        {
+          method: "PUT",
+          body: JSON.stringify(result),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        console.log("updated Success");
+        getAllQuestion();
+      }
+    } catch (error) {
+      console.log("failed to update");
+    }
+  }
+
   useEffect(() => {
     getAllQuestion();
   }, []);
@@ -70,7 +96,10 @@ const ListQuestion = () => {
           </thead>
           <tbody>
             {allQuestion.map((item, index) => (
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <tr
+                key={index}
+                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+              >
                 <th
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -98,8 +127,9 @@ const ListQuestion = () => {
                   <div
                     href="#"
                     className="font-medium text-blue-600 dark:text-blue-500 cursor-pointer inline bg-yellow-300 py-2 px-3 rounded-sm"
+                    onClick={() => editQuestion(item)}
                   >
-                    Edit
+                    {item.Test.closed ? "Open": "Close"}
                   </div>
                   <div
                     href="#"

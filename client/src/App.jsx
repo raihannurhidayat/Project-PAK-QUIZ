@@ -6,7 +6,6 @@ import Question from "./pages/Question";
 import Score from "./pages/Score";
 import Review from "./pages/Review";
 import User from "./pages/User";
-import axios from "axios";
 import QuestionNew from "./pages/QuestionNew";
 import AddQuestion from "./pages/AddQuestion";
 import AdminPanel from "./pages/AdminPanel";
@@ -21,7 +20,7 @@ function App() {
   const [cheating, setCheating] = useState(0);
   const [codeQuestion, setCodeQuestion] = useState("");
   const [statusFetch, setStatusFetch] = useState(false);
-  const [statusQuestion, setStatusQuestion] = useState(false)
+  const [questionInfo, setQuestionInfo] = useState({})
   const [testId, setTestId] = useState(0)
 
   useEffect(() => {
@@ -34,7 +33,7 @@ function App() {
     try {
       const data = await fetch(`http://127.0.0.1:8000/test/${codeQuestion}`);
       const result = await data.json();
-
+      setQuestionInfo(result.Test)
       const covertQuestion = result.Questions.map((item) => ({
         id: item.id,
         question: item.question,
@@ -69,6 +68,7 @@ function App() {
     setCheating(0);
     setCodeQuestion("");
     setStatusFetch(false);
+    setQuestionInfo({})
   };
 
   return (
@@ -93,7 +93,7 @@ function App() {
               />
             )}
             {display === "start" && (
-              <Start questions={questions} setDisplay={setDisplay} />
+              <Start questions={questions} setDisplay={setDisplay} questionInfo={questionInfo} />
             )}
             {display === "review" && (
               <Review

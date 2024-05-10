@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import QuestionNotFound from "./QuestionNotFound";
 
-const Start = ({ setDisplay, questions }) => {
+const Start = ({ setDisplay, questions, questionInfo }) => {
   const handleFullScreen = () => {
     document.documentElement.requestFullscreen();
   };
-
   return (
     <div className="flex flex-col gap-5 items-center h-full justify-center">
-      {questions.length > 0 ? (
+      {questions.length > 0 && questionInfo.closed == false ? (
         <>
           <div className="text-english-lavender text-[120px]">QUIZ APP</div>
       <div
